@@ -1,0 +1,66 @@
+[
+  {
+    "id": "chair01",
+    "name": "Modern Armchair",
+    "image": "/images/chair.jpg",
+    "model": "/models/chair.glb",
+    "usdz": "/models/chair.usdz",
+    "style": "modern"
+  },
+  {
+    "id": "table01",
+    "name": "Oak Coffee Table",
+    "image": "/images/table.jpg",
+    "model": "/models/table.glb",
+    "usdz": "/models/table.usdz",
+    "style": "rustic"
+  },
+  {
+    "id": "sofa01",
+    "name": "Three-Seater Sofa",
+    "image": "/images/sofa.jpg",
+    "model": "/models/sofa.glb",
+    "usdz": "/models/sofa.usdz",
+    "style": "contemporary"
+  },
+  {
+    "id": "cabinet01",
+    "name": "Wooden Cabinet",
+    "image": "/images/cabinet.jpg",
+    "model": "/models/cabinet.glb",
+    "usdz": "/models/cabinet.usdz",
+    "style": "rustic"
+  },
+  {
+    "id": "lamp01",
+    "name": "Standing Lamp",
+    "image": "/images/lamp.jpg",
+    "model": "/models/lamp.glb",
+    "usdz": "/models/lamp.usdz",
+    "style": "minimal"
+  },
+  {
+    "id": "bed01",
+    "name": "Queen Bed",
+    "image": "/images/bed.jpg",
+    "model": "/models/bed.glb",
+    "usdz": "/models/bed.usdz",
+    "style": "modern"
+  },
+  {
+    "id": "desk01",
+    "name": "Minimalist Desk",
+    "image": "/images/desk.jpg",
+    "model": "/models/desk.glb",
+    "usdz": "/models/desk.usdz",
+    "style": "scandinavian"
+  },
+  {
+    "id": "bookshelf01",
+    "name": "Tall Bookshelf",
+    "image": "/images/bookshelf.jpg",
+    "model": "/models/bookshelf.glb",
+    "usdz": "/models/bookshelf.usdz",
+    "style": "industrial"
+  }
+]

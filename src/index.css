@@ -176,3 +176,50 @@ model-viewer { width:100%; height:100%; display:block; background:transparent; }
 
 /* footer */
 .footer { margin-top:16px; font-size:0.85rem; color:var(--muted); text-align:center; }
+
+.photo-container {
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d0f18;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.catalog-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid transparent;
+}
+.catalog-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+.catalog-row.active {
+  border: 1px solid #4f46e5;
+  background: rgba(79, 70, 229, 0.12);
+}
+.thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.hint {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-align: center;
+}

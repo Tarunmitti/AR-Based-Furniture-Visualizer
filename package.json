@@ -4,17 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "start": "vite preview --port 5173"
+    "build": "npm install --legacy-peer-deps && vite build",
+    "preview": "vite preview --port 5173"
   },
   "dependencies": {
-    "@google/model-viewer": "^3.3.0",
+    "@google/model-viewer": "3.5.0",
+    "three": "0.163.0",
+    "@monogrid/gainmap-js": "3.1.0",
     "@tensorflow-models/mobilenet": "^2.1.0",
     "@tensorflow/tfjs": "^4.9.0",
     "axios": "^1.6.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "three": "^0.165.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

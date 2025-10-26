@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vscode/
+.env
+*.log
+.DS_Store
+npm-debug.log*
+package-lock.json
+yarn.lock
+public/models/*.glb
+public/models/*.usdz

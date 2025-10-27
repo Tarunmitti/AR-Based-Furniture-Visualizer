@@ -2,7 +2,7 @@
   {
     "id": "chair01",
     "name": "Modern Armchair",
-    "image": "/images/chair.jpg",
+    "image": "/images/chair.png",
     "model": "/models/chair.glb",
     "usdz": "/models/chair.usdz",
     "style": "modern"
@@ -10,7 +10,7 @@
   {
     "id": "table01",
     "name": "Oak Coffee Table",
-    "image": "/images/table.jpg",
+    "image": "/images/table.png",
     "model": "/models/table.glb",
     "usdz": "/models/table.usdz",
     "style": "rustic"
@@ -18,7 +18,7 @@
   {
     "id": "sofa01",
     "name": "Three-Seater Sofa",
-    "image": "/images/sofa.jpg",
+    "image": "/images/sofa.png",
     "model": "/models/sofa.glb",
     "usdz": "/models/sofa.usdz",
     "style": "contemporary"
@@ -26,7 +26,7 @@
   {
     "id": "cabinet01",
     "name": "Wooden Cabinet",
-    "image": "/images/cabinet.jpg",
+    "image": "/images/cabinet.png",
     "model": "/models/cabinet.glb",
     "usdz": "/models/cabinet.usdz",
     "style": "rustic"
@@ -34,7 +34,7 @@
   {
     "id": "lamp01",
     "name": "Standing Lamp",
-    "image": "/images/lamp.jpg",
+    "image": "/images/lamp.png",
     "model": "/models/lamp.glb",
     "usdz": "/models/lamp.usdz",
     "style": "minimal"
@@ -42,7 +42,7 @@
   {
     "id": "bed01",
     "name": "Queen Bed",
-    "image": "/images/bed.jpg",
+    "image": "/images/bed.png",
     "model": "/models/bed.glb",
     "usdz": "/models/bed.usdz",
     "style": "modern"
@@ -50,7 +50,7 @@
   {
     "id": "desk01",
     "name": "Minimalist Desk",
-    "image": "/images/desk.jpg",
+    "image": "/images/desk.png",
     "model": "/models/desk.glb",
     "usdz": "/models/desk.usdz",
     "style": "scandinavian"
@@ -58,7 +58,7 @@
   {
     "id": "bookshelf01",
     "name": "Tall Bookshelf",
-    "image": "/images/bookshelf.jpg",
+    "image": "/images/bookshelf.png",
     "model": "/models/bookshelf.glb",
     "usdz": "/models/bookshelf.usdz",
     "style": "industrial"

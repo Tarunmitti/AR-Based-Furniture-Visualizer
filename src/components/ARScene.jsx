@@ -1,4 +1,3 @@
-// src/components/ARScene.jsx
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -6,14 +5,14 @@ import { ARButton } from "three/examples/jsm/webxr/ARButton";
 
 export default function ARScene({ modelUrl }) {
   const mountRef = useRef();
-  const placedRef = useRef(null); // reference to the placed object
-  const furnitureModelRef = useRef(null); // the loaded GLTF scene for cloning
-  const bboxRef = useRef(null); // base model bbox (size)
+  const placedRef = useRef(null);
+  const furnitureModelRef = useRef(null);
+  const bboxRef = useRef(null);
   const [measuring, setMeasuring] = useState(false);
-  const measurePointsRef = useRef([]); // store two Vector3s
-  const [measurement, setMeasurement] = useState(null); // meters
-  const [scaleValue, setScaleValue] = useState(1.0); // UI slider controlled scale
-  const [rotationDeg, setRotationDeg] = useState(0); // UI rotation
+  const measurePointsRef = useRef([]);
+  const [measurement, setMeasurement] = useState(null);
+  const [scaleValue, setScaleValue] = useState(1.0);
+  const [rotationDeg, setRotationDeg] = useState(0);
   const reticleRef = useRef(null);
 
   useEffect(() => {
@@ -23,26 +22,21 @@ export default function ARScene({ modelUrl }) {
     const container = mountRef.current;
     if (!container) return;
 
-    // Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, 480);
     renderer.xr.enabled = true;
     container.appendChild(renderer.domElement);
 
-    // AR Button (enter AR)
     document.body.appendChild(
       ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] })
     );
 
-    // Scene & Camera
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera();
 
-    // Light
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
     scene.add(light);
 
-    // Reticle
     const ring = new THREE.RingGeometry(0.12, 0.15, 32).rotateX(-Math.PI / 2);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const reticle = new THREE.Mesh(ring, material);
@@ -51,20 +45,15 @@ export default function ARScene({ modelUrl }) {
     scene.add(reticle);
     reticleRef.current = reticle;
 
-    // Loader
     const loader = new GLTFLoader();
     loader.load(
       modelUrl,
       (gltf) => {
-        // store the source model for cloning later
         furnitureModelRef.current = gltf.scene;
-        // compute base bbox on raw model
         const tmp = new THREE.Box3().setFromObject(gltf.scene);
         const tmpSize = new THREE.Vector3();
         tmp.getSize(tmpSize);
-        bboxRef.current = tmpSize; // width (x), height (y), depth (z)
-        // Optionally apply a small default scale so models aren't huge
-        // gltf.scene.scale.setScalar(1.0);
+        bboxRef.current = tmpSize;
       },
       undefined,
       (err) => {
@@ -72,10 +61,8 @@ export default function ARScene({ modelUrl }) {
       }
     );
 
-    // Controller (select = tap in AR)
     controller = renderer.xr.getController(0);
     controller.addEventListener("select", () => {
-      // placing or measuring logic when user taps in AR
       if (!reticle.visible) return;
 
       const position = new THREE.Vector3().setFromMatrixPosition(
@@ -83,47 +70,38 @@ export default function ARScene({ modelUrl }) {
       );
 
       if (measuring) {
-        // measure mode: collect two points
         const pts = measurePointsRef.current;
         pts.push(position.clone());
         if (pts.length === 2) {
-          // compute distance (meters, WebXR uses meters)
           const d = pts[0].distanceTo(pts[1]);
           setMeasurement(d);
           setMeasuring(false);
-          measurePointsRef.current = []; // reset
-        } else {
-          // prompt user to select second point
+          measurePointsRef.current = [];
         }
         return;
       }
 
-      // Normal placement: clone the model if needed, or move existing
       if (!furnitureModelRef.current) {
         console.warn("Model not loaded yet");
         return;
       }
 
       if (!placedRef.current) {
-        // clone and add to scene
         const clone = furnitureModelRef.current.clone(true);
-        // set initial scale and rotation
         clone.scale.setScalar(scaleValue);
         clone.position.copy(position);
         clone.quaternion.setFromRotationMatrix(reticle.matrix);
-        clone.rotation.x = 0; // ensure upright
+        clone.rotation.x = 0;
         clone.userData.baseScale = scaleValue;
         scene.add(clone);
         placedRef.current = clone;
       } else {
-        // move existing placed object to new position
         placedRef.current.position.copy(position);
         placedRef.current.quaternion.setFromRotationMatrix(reticle.matrix);
       }
     });
     scene.add(controller);
 
-    // WebXR session start: request hit test source
     function onSessionStart() {
       const session = renderer.xr.getSession();
       session.requestReferenceSpace("viewer").then((ref) => {
@@ -141,7 +119,6 @@ export default function ARScene({ modelUrl }) {
     }
     renderer.xr.addEventListener("sessionstart", onSessionStart);
 
-    // animation loop
     renderer.setAnimationLoop((timestamp, frame) => {
       if (frame) {
         const session = renderer.xr.getSession();
@@ -158,30 +135,24 @@ export default function ARScene({ modelUrl }) {
         }
       }
 
-      // apply UI-driven transforms to placed object every frame
       if (placedRef.current) {
-        // set scale (uniform)
         placedRef.current.scale.setScalar(scaleValue);
-        // set rotation (around Y)
         placedRef.current.rotation.y = (rotationDeg * Math.PI) / 180;
       }
 
       renderer.render(scene, camera);
     });
 
-    // cleanup on unmount
     return () => {
       renderer.setAnimationLoop(null);
       if (renderer.domElement) container.removeChild(renderer.domElement);
       try {
-        // remove the ARButton created earlier
         const btn = document.querySelector(".webxr-button");
         if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
       } catch (e) {}
     };
   }, [modelUrl, measuring, scaleValue, rotationDeg]);
 
-  // UI handlers (React-controlled)
   function startMeasure() {
     setMeasurement(null);
     measurePointsRef.current = [];
@@ -197,27 +168,19 @@ export default function ARScene({ modelUrl }) {
       alert("Place a model first in AR.");
       return;
     }
-    // compute model's current width in world meters
-    const modelWidth = bboxRef.current.x; // base width in model's units (should be meters for GLTF exported to meters)
+    const modelWidth = bboxRef.current.x; 
     if (modelWidth <= 0) {
       alert("Cannot determine model width.");
       return;
     }
-    // desired scaleFactor such that modelWidth * scaleFactor === measurement
     const desiredScale = (measurement / modelWidth);
-    // apply via scaleValue state (keeps uniform scaling)
     setScaleValue(desiredScale);
-    // applied in render loop
   }
 
   function resetPlacement() {
-    // remove placed object if any
     const mount = mountRef.current;
     if (!mount) return;
-    // find scene from renderer? Simpler: reload page to reset scene
-    // But we can attempt to remove placedRef.current
     if (placedRef.current) {
-      // placedRef.current.parent.remove(placedRef.current)
       placedRef.current.visible = false;
       placedRef.current = null;
     }
@@ -233,7 +196,7 @@ export default function ARScene({ modelUrl }) {
         Tap the AR button (added to the page), then tap anywhere in the AR view to place/move the model.
       </div>
 
-      {/* Controls panel (desktop + mobile) */}
+      {}
       <div className="absolute bottom-4 left-4 bg-white/90 p-2 rounded shadow max-w-[320px] z-50">
         <div className="flex gap-2 mb-2">
           <button

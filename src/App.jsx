@@ -284,11 +284,25 @@ export default function App() {
         )}
       </div>
 
-      {isMobile && selected && (
-        <div style={{ textAlign: "center", marginTop: 12 }}>
-          <a href={selected.usdz || selected.model} rel="ar" className="btn">View in AR</a>
-        </div>
-      )}
+      {/* Mobile AR Launch */}
+{isMobile && selected && (
+  <div style={{ textAlign: "center", marginTop: 12 }}>
+    <model-viewer
+      src={selected.model}
+      ios-src={selected.usdz || ""}
+      ar
+      ar-modes="scene-viewer quick-look webxr"
+      ar-scale="auto"
+      camera-controls
+      style={{ width: "100%", height: "400px", borderRadius: "12px" }}
+    >
+    </model-viewer>
+    <p className="hint" style={{ marginTop: 8 }}>
+      Tap the <b>AR</b> icon above to view furniture in your space.
+    </p>
+  </div>
+)}
+
 
       <footer className="footer" style={{ marginTop: 18 }}>© 2025 AR Furniture Visualizer</footer>
     </div>
